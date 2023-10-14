@@ -8,19 +8,12 @@ parser_definition() {
 
     msg -- '' 'Commands: '
     msg -- 'Use command -h for a command help.'
-    cmd cmd1 -- "CMD1 description."
-    cmd cmd2 -- "CMD2 description."
-    cmd text_example -- "Print different type of texts."
-    cmd create -- "Create this and that."
+    cmd init -- "Initialize a new encrypted GPG homedir and create the master key."
 
     msg -- '' "Examples:
     
-    cmd1 
-    $SCRIPT_NAME cmd1
-    cmd2 
-    $SCRIPT_NAME cmd2
-    text_example
-    $SCRIPT_NAME text_example
+    init 
+    $SCRIPT_NAME init --name 'Max Muster' --email 'm.muster@example.com'
     Display the version:
     $SCRIPT_NAME --version
     Display help:

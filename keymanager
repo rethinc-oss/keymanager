@@ -54,9 +54,7 @@ script_dir=${self%/*}
     . "${script_dir}/lib/getoptions.sh"
     . "${script_dir}/lib/main_definition.sh"
     . "${script_dir}/lib/utils.sh"
-    . "${script_dir}/lib/cmd1_definition.sh"
-    . "${script_dir}/lib/cmd2_definition.sh"
-    . "${script_dir}/lib/create_definition.sh"
+    . "${script_dir}/lib/init_definition.sh"
     . "${script_dir}/lib/shell_helpers.sh"
 }
 
@@ -86,36 +84,14 @@ if [ $# -gt 0 ]; then
     cmd=$1
     shift
     case $cmd in
-    cmd1)
-        eval "$(getoptions parser_definition_cmd1 parse "$0")"
+    init)
+        eval "$(getoptions parser_definition_init parse "$0")"
         parse "$@"
         eval "set -- $REST"
         # shellcheck disable=SC1091
-        . "${script_dir}/src/cmd1.sh"
-        fn_cmd1 "$@"
+        . "${script_dir}/src/init.sh"
+        fn_init "$@"
         ;;
-    cmd2)
-        eval "$(getoptions parser_definition_cmd2 parse "$0")"
-        parse "$@"
-        eval "set -- $REST"
-        # shellcheck disable=SC1091
-        . "${script_dir}/src/cmd2.sh"
-        fn_cmd2 "$@"
-        ;;
-    text_example)
-        # shellcheck disable=SC1091
-        . "${script_dir}/src/text_example.sh"
-        fn_text
-        ;;
-    create)
-        eval "$(getoptions parser_definition_create parse "$0")"
-        parse "$@"
-        eval "set -- $REST"
-        # shellcheck disable=SC1091
-        . "${script_dir}/src/create.sh"
-        fn_create "$@"
-        ;;
-    # more lines
     --) ;; # no subcommand, arguments only
     esac
 fi
