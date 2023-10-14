@@ -107,7 +107,7 @@ strikeprint() {
 
 # lib/banners
 # Usage: bannerSimple "my title" "*"
-function bannerSimple() {
+bannerSimple() {
     msg="${2} ${1} ${2}"
     edge=$(echo "${msg}" | sed "s/./"${2}"/g")
     echo "${edge}"
@@ -117,7 +117,7 @@ function bannerSimple() {
 }
 
 # Usage: bannerColor "my title" "red" "*"
-function bannerColor() {
+bannerColor() {
     case ${2} in
     black)
         color=0
