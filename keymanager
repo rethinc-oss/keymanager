@@ -9,11 +9,6 @@ set -eu
 VERSION="1.0.0"
 SCRIPT_NAME=$(basename "$0")
 
-# Set variables
-VAR1="VAR1"
-VAR2="VAR2"
-VAR3="VAR3"
-
 # Keep readlinkf function
 readlinkf() {
     [ "${1:-}" ] || return 1
@@ -48,6 +43,11 @@ readlinkf() {
 self=$(readlinkf "$0")
 script_dir=${self%/*}
 
+# Set variables
+CONTAINER_NAME="gpghome.img"
+CONTAINER_PATH="$script_dir/$CONTAINER_NAME"
+MOUNT_PATH="/tmp/gpghome"
+
 # Import files
 # shellcheck disable=SC1091
 {
@@ -56,27 +56,24 @@ script_dir=${self%/*}
     . "${script_dir}/lib/utils.sh"
     . "${script_dir}/lib/init_definition.sh"
     . "${script_dir}/lib/shell_helpers.sh"
+    . "${script_dir}/lib/keymanager_helpers.sh"
 }
+
+# Autoelevate
+if [ $(id -u) != 0 ]; then
+    yellowprint 'Running as normal user, elevating...'
+    sudo -p 'Please ener the root password: ' "$0" "$@"
+    exit $?
+fi
 
 # Keep it. You need this for main parser.
 eval "$(getoptions parser_definition parse "$0") exit 1"
 parse "$@"
 eval "set -- $REST"
 
-# CHECK ENVIRONMENT
-# If you need to check OS uncomment this
-# if [ "$(uname)" = "Linux" ]; then
-#     echo "Your OS is Linux."
-# elif [ "$(uname)" = "Darwin" ]; then
-#     echo "Your OS is mac."
-# fi
-
-# If you are using Bash, check Bash version
-# check_bash 5
-
 # Check dependencies of your script
-# check_cmd jq
-# check_cmd you_dont_have_it
+ check_cmd cryptsetup
+ check_cmd gpg
 
 # Add more commands.
 # Don't forget to add your command in lib/main_definition.sh
