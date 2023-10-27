@@ -10,6 +10,7 @@ parser_definition() {
     msg -- 'Use command -h for a command help.'
     cmd init -- "Initialize a new encrypted GPG homedir and create the master key."
     cmd addkey -- "Add a new subkey to the keyring."
+    cmd listkeys -- "List available subkeys in the keyring."
 
     msg -- '' "Examples:
     

@@ -56,6 +56,7 @@ MOUNT_PATH="/tmp/gpghome"
     . "${script_dir}/lib/utils.sh"
     . "${script_dir}/lib/addkey_definition.sh"
     . "${script_dir}/lib/init_definition.sh"
+    . "${script_dir}/lib/listkeys_definition.sh"
     . "${script_dir}/lib/shell_helpers.sh"
     . "${script_dir}/lib/keymanager_helpers.sh"
 }
@@ -97,6 +98,15 @@ if [ $# -gt 0 ]; then
         # shellcheck disable=SC1091
         . "${script_dir}/src/addkey.sh"
         fn_addkey "$@"
+        ;;
+    --) ;; # no subcommand, arguments only
+    listkeys)
+        eval "$(getoptions parser_definition_listkeys parse "$0")"
+        parse "$@"
+        eval "set -- $REST"
+        # shellcheck disable=SC1091
+        . "${script_dir}/src/listkeys.sh"
+        fn_listkeys "$@"
         ;;
     --) ;; # no subcommand, arguments only
     esac
