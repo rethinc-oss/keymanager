@@ -44,9 +44,9 @@ self=$(readlinkf "$0")
 script_dir=${self%/*}
 
 # Set variables
-CONTAINER_NAME="gpghome.img"
+CONTAINER_NAME="keyring.img"
 CONTAINER_PATH="$script_dir/$CONTAINER_NAME"
-MOUNT_PATH="/tmp/gpghome"
+MOUNT_PATH="/tmp/keymanager-keyring"
 
 # Import files
 # shellcheck disable=SC1091

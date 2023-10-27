@@ -34,7 +34,7 @@ fn_cleanup() {
     fi
 
     yellowprint "Stopping GPG-Agent..."
-    gpgconf --homedir /tmp/gpghome --kill gpg-agent; sleep 3
+    gpgconf --homedir ${MOUNT_PATH} --kill gpg-agent; sleep 3
 
     if mount | grep -q "$MOUNT_PATH"; then
       yellowprint "Unmounting GPGHOME..."
