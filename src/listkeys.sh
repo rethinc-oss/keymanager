@@ -24,6 +24,6 @@ fn_listkeys() {
             else
               usage="UNKNOWN"
 
-            print $5,"  ",algo,"  ",usage}' \
-        | column --table --table-columns KEYID,ALGO,USAGE
+            print $5,"  ",algo,"  ",usage,"  ",strftime("%F",$7)}' \
+        | column --table --table-columns KEYID,ALGO,USAGE,EXPIRATION
 }
