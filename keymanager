@@ -58,6 +58,7 @@ MOUNT_PATH="/tmp/gpghome"
     . "${script_dir}/lib/exportkey_definition.sh"
     . "${script_dir}/lib/init_definition.sh"
     . "${script_dir}/lib/listkeys_definition.sh"
+    . "${script_dir}/lib/setexpire_definition.sh"
     . "${script_dir}/lib/shell_helpers.sh"
     . "${script_dir}/lib/keymanager_helpers.sh"
 }
@@ -116,6 +117,14 @@ if [ $# -gt 0 ]; then
         # shellcheck disable=SC1091
         . "${script_dir}/src/exportkey.sh"
         fn_exportkey "$@"
+        ;;
+    setexpire)
+        eval "$(getoptions parser_definition_setexpire parse "$0")"
+        parse "$@"
+        eval "set -- $REST"
+        # shellcheck disable=SC1091
+        . "${script_dir}/src/setexpire.sh"
+        fn_setexpire "$@"
         ;;
     --) ;; # no subcommand, arguments only
     esac

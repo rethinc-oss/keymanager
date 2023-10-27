@@ -12,6 +12,7 @@ parser_definition() {
     cmd addkey -- "Add a new subkey to the keyring."
     cmd listkeys -- "List available subkeys in the keyring."
     cmd exportkey -- "Export a subkey from the keyring."
+    cmd setexpire -- "Set the expiration date for the given subkey."
 
     msg -- '' "Examples:
     
