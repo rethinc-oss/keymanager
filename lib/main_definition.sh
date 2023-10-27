@@ -11,6 +11,7 @@ parser_definition() {
     cmd init -- "Initialize a new encrypted GPG homedir and create the master key."
     cmd addkey -- "Add a new subkey to the keyring."
     cmd listkeys -- "List available subkeys in the keyring."
+    cmd exportkey -- "Export a subkey from the keyring."
 
     msg -- '' "Examples:
     

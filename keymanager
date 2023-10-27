@@ -55,6 +55,7 @@ MOUNT_PATH="/tmp/gpghome"
     . "${script_dir}/lib/main_definition.sh"
     . "${script_dir}/lib/utils.sh"
     . "${script_dir}/lib/addkey_definition.sh"
+    . "${script_dir}/lib/exportkey_definition.sh"
     . "${script_dir}/lib/init_definition.sh"
     . "${script_dir}/lib/listkeys_definition.sh"
     . "${script_dir}/lib/shell_helpers.sh"
@@ -107,6 +108,14 @@ if [ $# -gt 0 ]; then
         # shellcheck disable=SC1091
         . "${script_dir}/src/listkeys.sh"
         fn_listkeys "$@"
+        ;;
+    exportkey)
+        eval "$(getoptions parser_definition_exportkey parse "$0")"
+        parse "$@"
+        eval "set -- $REST"
+        # shellcheck disable=SC1091
+        . "${script_dir}/src/exportkey.sh"
+        fn_exportkey "$@"
         ;;
     --) ;; # no subcommand, arguments only
     esac

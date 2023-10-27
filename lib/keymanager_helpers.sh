@@ -21,9 +21,16 @@ read_secret()
 fn_cleanup() {
     yellowprint "Cleaning up:"
     if [ "${current_tty+1}" ]; then
-        yellowprint "- Restoring tty settings"
+        yellowprint "Restoring tty settings..."
         stty "$current_tty"
         unset current_tty
+    fi
+
+    if [ "${TEMPOPERATION+1}" ]; then
+        yellowprint "Cleaning up temporary files..."
+        gpgconf --homedir /tmp/gpghome-temp --kill gpg-agent; sleep 3
+        rm -rf /tmp/gpghome-temp/
+        unset TEMPOPERATION
     fi
 
     yellowprint "Stopping GPG-Agent..."
