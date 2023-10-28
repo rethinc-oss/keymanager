@@ -37,14 +37,7 @@ fn_addkey() {
     if [ "$KEY_PRESENT" = "FOUND" ]; then
        yellowprint 'Key already present in keyring, skipping...'; exit 1
     else
-        KEY_ID=$(gpg --quiet --homedir=$MOUNT_PATH --list-keys --with-colons \
-        | grep "pub" \
-        | awk -F: '{print $5}')
-
-        KEY_FPR=$(gpg --quiet --homedir=$MOUNT_PATH --list-keys --with-colons \
-        | grep "fpr" \
-        | awk -v id=$KEY_ID -F: '{ if ($10~id) print $10}')
-
-        gpg --quiet --homedir=$MOUNT_PATH --quick-add-key $KEY_FPR $ALGO $USAGE 3y
+        MASTER_FPR=$(fn_get_master_fpr)
+        gpg --quiet --homedir=$MOUNT_PATH --quick-add-key $MASTER_FPR $ALGO $USAGE 3y
     fi
 }

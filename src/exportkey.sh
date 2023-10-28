@@ -13,9 +13,7 @@ fn_exportkey() {
     fn_read_container_password
     fn_open_container
 
-    KEY_FPR=$(gpg --quiet --homedir=$MOUNT_PATH --list-keys --with-colons \
-    | grep "fpr" \
-    | awk -v id=$KEYID -F: '{ if ($10~id) print $10}')
+    KEY_FPR=$(fn_get_key_fpr "${KEYID}")
 
     mkdir -p /tmp/gpghome-temp
     chmod 700 /tmp/gpghome-temp

@@ -66,3 +66,24 @@ fn_open_container() {
         exit 1
     fi
 }
+
+fn_get_master_fpr() {
+    MASTER_ID=$(gpg --quiet --homedir=$MOUNT_PATH --list-keys --with-colons \
+        | grep "^pub:" \
+        | awk -F: '{print $5}')
+
+    MASTER_FPR=$(gpg --quiet --homedir=$MOUNT_PATH --list-keys --with-colons \
+    | grep "fpr" \
+    | awk -v id=$MASTER_ID -F: '{ if ($10~id) print $10}')
+
+    echo "${MASTER_FPR}"
+}
+
+fn_get_key_fpr() {
+    KEY_ID=$1
+    KEY_FPR=$(gpg --quiet --homedir=$MOUNT_PATH --list-keys --with-colons \
+    | grep "fpr" \
+    | awk -v id=$KEYID -F: '{ if ($10~id) print $10}')
+
+    echo "${KEY_FPR}"
+}
